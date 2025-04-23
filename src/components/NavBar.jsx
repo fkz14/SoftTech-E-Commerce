@@ -22,19 +22,10 @@ function NavBar () {
         <MenuButton className="menu">
             Menu
         </MenuButton>
-        <MenuList backgroundColor={"#292c3e"}>
-            <MenuItem 
-              backgroundColor={"#292c3e"}
-              _hover={{ bg: "#3a3d52" }}
-            >Inicio</MenuItem>
-            <MenuItem 
-              backgroundColor={"#292c3e"}
-              _hover={{ bg: "#3a3d52" }}
-            >Tienda</MenuItem>
-            <MenuItem 
-              backgroundColor={"#292c3e"}
-              _hover={{ bg: "#3a3d52" }}
-            >Soporte</MenuItem>
+        <MenuList>
+            <MenuItem>Inicio</MenuItem>
+            <MenuItem>Tienda</MenuItem>
+            <MenuItem>Soporte</MenuItem>
         </MenuList>
         </Menu>
           <CartWidget/>

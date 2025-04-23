@@ -5,13 +5,11 @@
     width: 100vw;
     height: 9vh;
     padding: 0px 20px;
-    background-color:  #292c3e;
-    color: white;
+
 }
 
 .title {
     font-size: 25px;
-    color: white;
 }
 
 .menu {
