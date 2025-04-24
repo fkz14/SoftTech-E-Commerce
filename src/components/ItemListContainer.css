@@ -1,0 +1,9 @@
+.containerList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: bisque;
+    padding: 20px;
+    width: 20%;
+    margin: auto;
+}

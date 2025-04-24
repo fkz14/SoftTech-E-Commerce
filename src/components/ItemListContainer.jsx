@@ -1,7 +1,9 @@
+import "./ItemListContainer.css"
+
 function ItemListContainer({ greeting}) {
     return (
         <>
-            <div>
+            <div className="containerList">
                 <h2>{greeting}</h2>
             </div>
         </>
