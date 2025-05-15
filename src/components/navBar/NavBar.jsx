@@ -26,8 +26,12 @@ function NavBar() {
           className="title"
           cursor={"pointer"}
           onClick={() => navigate("/")}
+          fontFamily={"monospace"}
+          borderBottom={"2px"}
+          backgroundColor={""}
+          fontSize={"4xl"}
         >
-          SoftHard
+          SoftTech
         </Text>
         <Menu>
           <MenuButton className="menu">Menu</MenuButton>

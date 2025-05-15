@@ -1,5 +1,4 @@
-'use client'
-
+import { useState } from 'react';
 import {
   Box,
   Container,
@@ -15,27 +14,57 @@ import {
   useColorModeValue,
   List,
   ListItem,
-} from '@chakra-ui/react'
-import { MdLocalShipping } from 'react-icons/md'
+  Spinner,
+  Center,
+} from '@chakra-ui/react';
+import { MdLocalShipping } from 'react-icons/md';
 
 const ItemDetailContainer = ({ product }) => {
+  const [imgLoaded, setImgLoaded] = useState(false);
+
   return (
     <Container maxW={'7xl'}>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 24 }}>
-        <Flex>
+        <Flex
+          align="center"
+          justify="center"
+          minH={{ base: '300px', sm: '400px', lg: '500px' }}
+          maxH={{ base: '300px', sm: '400px', lg: '500px' }}
+          position="relative"
+          w="100%"
+        >
+          {!imgLoaded && (
+            <Center
+              position="absolute"
+              top="0"
+              left="0"
+              w="100%"
+              h="100%"
+              zIndex={1}
+              bg="whiteAlpha.700"
+              borderRadius="md"
+            >
+              <Spinner size="xl" color="teal.400" thickness="6px" />
+            </Center>
+          )}
           <Image
             rounded={'md'}
             alt={'product image'}
-            src={product.images[0]}
-            fit={'cover'}
+            src={product.images?.[0]}
+            fit={'contain'}
             align={'center'}
-            w={'100%'}
-            h={{ base: '100%', sm: '400px', lg: '500px' }}
+            w="100%"
+            h={{ base: '300px', sm: '400px', lg: '500px' }}
+            maxH={{ base: '300px', sm: '400px', lg: '500px' }}
             border={"2px"}
             borderColor={"black"}
+            objectFit="contain"
+            bg="white"
+            onLoad={() => setImgLoaded(true)}
+            display={imgLoaded ? "block" : "none"}
           />
         </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -80,75 +109,33 @@ const ItemDetailContainer = ({ product }) => {
                 fontWeight={'500'}
                 textTransform={'uppercase'}
                 mb={'4'}>
-                Features
-              </Text>
-
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-                <List spacing={2}>
-                  <ListItem>Chronograph</ListItem>
-                  <ListItem>Master Chronometer Certified</ListItem>{' '}
-                  <ListItem>Tachymeter</ListItem>
-                </List>
-                <List spacing={2}>
-                  <ListItem>Anti‑magnetic</ListItem>
-                  <ListItem>Chronometer</ListItem>
-                  <ListItem>Small seconds</ListItem>
-                </List>
-              </SimpleGrid>
-            </Box>
-            <Box>
-              <Text
-                fontSize={{ base: '16px', lg: '18px' }}
-                color={useColorModeValue('yellow.500', 'yellow.300')}
-                fontWeight={'500'}
-                textTransform={'uppercase'}
-                mb={'4'}>
                 Product Details
               </Text>
 
               <List spacing={2}>
                 <ListItem>
                   <Text as={'span'} fontWeight={'bold'}>
-                    Between lugs:
+                    Rating:
                   </Text>{' '}
-                  20 mm
+                  {product.rating}
                 </ListItem>
                 <ListItem>
                   <Text as={'span'} fontWeight={'bold'}>
-                    Bracelet:
+                    Stock:
                   </Text>{' '}
-                  leather strap
+                  {product.stock}
                 </ListItem>
                 <ListItem>
                   <Text as={'span'} fontWeight={'bold'}>
-                    Case:
+                    SKU:
                   </Text>{' '}
-                  Steel
+                  {product.sku}
                 </ListItem>
                 <ListItem>
                   <Text as={'span'} fontWeight={'bold'}>
-                    Case diameter:
+                    Weight:
                   </Text>{' '}
-                  42 mm
-                </ListItem>
-                <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Dial color:
-                  </Text>{' '}
-                  Black
-                </ListItem>
-                <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Crystal:
-                  </Text>{' '}
-                  Domed, scratch‑resistant sapphire crystal with anti‑reflective treatment
-                  inside
-                </ListItem>
-                <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Water resistance:
-                  </Text>{' '}
-                  5 bar (50 metres / 167 feet){' '}
+                  {product.weight}
                 </ListItem>
               </List>
             </Box>
@@ -181,8 +168,3 @@ const ItemDetailContainer = ({ product }) => {
 };
 
 export default ItemDetailContainer;
-
-
-
-
-
