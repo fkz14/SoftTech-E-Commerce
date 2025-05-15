@@ -1,18 +1,16 @@
-import { ChakraProvider } from "@chakra-ui/react"
-import ItemListContainer from "./components/itemListContainer/ItemListContainer"
+import { ChakraProvider } from "@chakra-ui/react";
 import MainLayout from "./layout/MainLayout";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes";
 
-function App() { 
-
-  return ( 
-    <>  
+function App() {
+  return (
+    <>
       <ChakraProvider>
-        <MainLayout> 
-          <ItemListContainer/>
-        </MainLayout>
+        <RouterProvider router={router} />
       </ChakraProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

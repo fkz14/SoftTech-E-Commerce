@@ -1,9 +1,9 @@
 import { Box, Heading, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import "./ItemListContainer.css";
-import { getAllProductos } from "../services/product.service";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
-const ItemCard = ({ image, title, description, price }) => {
+const ItemCard = ({ id, image, title, description, price }) => {
+  const navigate = useNavigate();
   return (
     <Box
       borderWidth={"1px"}
@@ -15,6 +15,8 @@ const ItemCard = ({ image, title, description, price }) => {
         boxShadow: "xl",
         borderColor: "green",
       }}
+      onClick={() => navigate(`/item/${id}`)}
+      cursor={"pointer"}
     >
       <Image
         src={image}
@@ -44,20 +46,15 @@ const ItemCard = ({ image, title, description, price }) => {
   );
 };
 
-function ItemListContainer() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getAllProductos().then((res) => {
-      setProducts(res.data.products);
-    });
-  }, []);
-
+function ItemListContainer({products}) {
+  
   return (
     <SimpleGrid columns={{ lg: 4, md: 3, sm: 1 }} spacing={4} margin={4}>
       {products.map((product) => {
         return (
           <ItemCard
+            key={product.id}
+            id={product.id}
             image={product.thumbnail}
             title={product.title}
             description={product.description}
