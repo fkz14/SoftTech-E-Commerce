@@ -1,8 +1,14 @@
+// Importa los componentes de Chakra UI necesarios para el diseño de la página
 import { Box, Button, Center, Heading, Text, VStack } from "@chakra-ui/react";
+// Importa useNavigate para redireccionar al usuario
 import { useNavigate } from "react-router";
 
+// Componente para mostrar una página de error 404 personalizada
 export const NotFound = () => {
+  // Hook para navegar a otras rutas
   const navigate = useNavigate();
+
+  // Renderiza el mensaje de error y un botón para volver al inicio
   return (
     <Box
       minH="100vh"

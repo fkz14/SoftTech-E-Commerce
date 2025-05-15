@@ -5,10 +5,14 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../services/product.service";
 
+// Componente de barra de navegación principal
 function NavBar() {
+  // Estado para almacenar las categorías obtenidas
   const [categories, setCategories] = useState([]);
+  // Hook para navegar entre rutas
   const navigate = useNavigate();
 
+  // Efecto para obtener las categorías al montar el componente
   useEffect(() => {
     getAllCategories()
       .then((res) => {
@@ -19,9 +23,11 @@ function NavBar() {
       });
   }, []);
 
+  // Renderiza la barra de navegación con el logo, menú de categorías y el widget del carrito
   return (
     <>
       <div className="container">
+        {/* Logo que navega al inicio */}
         <Text
           className="title"
           cursor={"pointer"}
@@ -33,14 +39,23 @@ function NavBar() {
         >
           SoftTech
         </Text>
+        {/* Menú desplegable de categorías */}
         <Menu>
           <MenuButton className="menu">Menu</MenuButton>
           <MenuList>
             {categories.map((item) => {
-              return <MenuItem key={item.slug} onClick={() => navigate(`/category/${item.slug}`) }>{item.name}</MenuItem>;
+              return (
+                <MenuItem
+                  key={item.slug}
+                  onClick={() => navigate(`/category/${item.slug}`)}
+                >
+                  {item.name}
+                </MenuItem>
+              );
             })}
           </MenuList>
         </Menu>
+        {/* Widget del carrito */}
         <CartWidget />
       </div>
     </>

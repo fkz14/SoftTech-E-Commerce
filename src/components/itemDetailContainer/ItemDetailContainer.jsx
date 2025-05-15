@@ -19,15 +19,19 @@ import {
 } from '@chakra-ui/react';
 import { MdLocalShipping } from 'react-icons/md';
 
+// Componente para mostrar el detalle de un producto individual
 const ItemDetailContainer = ({ product }) => {
+  // Estado para controlar si la imagen ya se cargó
   const [imgLoaded, setImgLoaded] = useState(false);
 
+  // Renderiza el detalle del producto con imagen, información y botón de agregar al carrito
   return (
     <Container maxW={'7xl'}>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 24 }}>
+        {/* Sección de la imagen del producto */}
         <Flex
           align="center"
           justify="center"
@@ -36,6 +40,7 @@ const ItemDetailContainer = ({ product }) => {
           position="relative"
           w="100%"
         >
+          {/* Spinner de carga mientras la imagen no se ha cargado */}
           {!imgLoaded && (
             <Center
               position="absolute"
@@ -50,6 +55,7 @@ const ItemDetailContainer = ({ product }) => {
               <Spinner size="xl" color="teal.400" thickness="6px" />
             </Center>
           )}
+          {/* Imagen principal del producto */}
           <Image
             rounded={'md'}
             alt={'product image'}
@@ -67,6 +73,7 @@ const ItemDetailContainer = ({ product }) => {
             display={imgLoaded ? "block" : "none"}
           />
         </Flex>
+        {/* Sección de información y acciones del producto */}
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={'header'}>
             <Heading
@@ -95,6 +102,7 @@ const ItemDetailContainer = ({ product }) => {
               <StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />
             }>
             <VStack spacing={{ base: 4, sm: 6 }}>
+              {/* Descripción del producto */}
               <Text
                 color={useColorModeValue('gray.500', 'gray.400')}
                 fontSize={'2xl'}
@@ -111,7 +119,7 @@ const ItemDetailContainer = ({ product }) => {
                 mb={'4'}>
                 Product Details
               </Text>
-
+              {/* Lista de detalles adicionales del producto */}
               <List spacing={2}>
                 <ListItem>
                   <Text as={'span'} fontWeight={'bold'}>
@@ -141,6 +149,7 @@ const ItemDetailContainer = ({ product }) => {
             </Box>
           </Stack>
 
+          {/* Botón para agregar el producto al carrito */}
           <Button
             rounded={'none'}
             w={'full'}
@@ -157,6 +166,7 @@ const ItemDetailContainer = ({ product }) => {
             Add to cart
           </Button>
 
+          {/* Información de envío */}
           <Stack direction="row" alignItems="center" justifyContent={'center'}>
             <MdLocalShipping />
             <Text>2-3 business days delivery</Text>

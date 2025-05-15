@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Box, Heading, Image, SimpleGrid, Text, Spinner, Center } from "@chakra-ui/react";
-import "./ItemListContainer.css";
 import { useNavigate } from "react-router";
 
+// Componente para mostrar la tarjeta de un producto individual
 const ItemCard = ({ id, image, title, description, price }) => {
+  // Hook para navegar a la página de detalle del producto
   const navigate = useNavigate();
+  // Estado para controlar si la imagen ya se cargó
   const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
@@ -21,7 +23,9 @@ const ItemCard = ({ id, image, title, description, price }) => {
       onClick={() => navigate(`/item/${id}`)}
       cursor={"pointer"}
     >
+      {/* Contenedor de la imagen del producto */}
       <Box position="relative" minH="200px" display="flex" alignItems="center" justifyContent="center">
+        {/* Spinner de carga mientras la imagen no se ha cargado */}
         {!imgLoaded && (
           <Center
             position="absolute"
@@ -36,6 +40,7 @@ const ItemCard = ({ id, image, title, description, price }) => {
             <Spinner size="lg" color="teal.400" thickness="4px" />
           </Center>
         )}
+        {/* Imagen del producto */}
         <Image
           src={image}
           maxWidth={"200px"}
@@ -48,6 +53,7 @@ const ItemCard = ({ id, image, title, description, price }) => {
           display={imgLoaded ? "block" : "none"}
         />
       </Box>
+      {/* Información del producto */}
       <Box p={"4"}>
         <Heading size={"md"} marginBottom={"2"}>
           {title}
@@ -68,6 +74,7 @@ const ItemCard = ({ id, image, title, description, price }) => {
   );
 };
 
+// Componente para mostrar una lista de productos en un grid responsivo
 function ItemListContainer({ products }) {
   return (
     <SimpleGrid columns={{ lg: 4, md: 3, sm: 1 }} spacing={4} margin={4}>

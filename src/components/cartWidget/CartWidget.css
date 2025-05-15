@@ -1,3 +1,4 @@
+/* Estilos para el contenedor principal del widget del carrito */
 .cart-widget {
     display: flex;
     align-items: center;
@@ -5,6 +6,7 @@
     gap: 5px;
 }
 
+/* Estilos para el ícono del carrito */
 .cart-icon {
     font-size: 20px;
 }

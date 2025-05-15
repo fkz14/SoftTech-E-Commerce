@@ -1,14 +1,20 @@
+// Importa los hooks y componentes necesarios de React, React Router y Chakra UI
 import { useParams } from "react-router";
 import ItemDetailContainer from "../components/itemDetailContainer/ItemDetailContainer";
 import { useEffect, useState } from "react";
 import { getProductById } from "../components/services/product.service";
 import { Box, Center, Spinner, Text, VStack } from "@chakra-ui/react";
 
+// Componente para mostrar el detalle de un producto individual
 const Item = () => {
+  // Obtiene el parámetro de ID desde la URL
   const { id } = useParams();
+  // Estado para almacenar el producto obtenido
   const [product, setProduct] = useState({});
+  // Estado para controlar la carga
   const [loading, setLoading] = useState(true);
 
+  // Efecto para obtener los datos del producto cuando cambia el ID
   useEffect(() => {
     getProductById(id)
       .then((res) => setProduct(res.data))
@@ -16,6 +22,7 @@ const Item = () => {
       .finally(() => setLoading(false));
   }, [id]);
 
+  // Muestra un spinner de carga mientras se obtienen los datos
   if (loading) {
     return (
       <Box
@@ -40,6 +47,7 @@ const Item = () => {
     );
   }
 
+  // Renderiza el contenedor de detalle del producto con la información obtenida
   return <ItemDetailContainer product={product} />;
 };
 
