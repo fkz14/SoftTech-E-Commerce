@@ -1,5 +1,4 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import MainLayout from "./layout/MainLayout";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
 
