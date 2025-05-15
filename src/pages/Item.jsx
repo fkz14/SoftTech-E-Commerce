@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import ItemDetailContainer from "../components/itemDetailContainer/itemDetailContainer";
+import ItemDetailContainer from "../components/itemDetailContainer/ItemDetailContainer";
 import { useEffect, useState } from "react";
 import { getProductById } from "../components/services/product.service";
 import { Box, Center, Spinner, Text, VStack } from "@chakra-ui/react";
