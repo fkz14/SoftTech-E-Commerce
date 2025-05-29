@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
 // Importa la configuración de rutas
 import { router } from "./routes";
+import { CartProvider } from "./context/CartContext";
 
 // Componente principal de la aplicación
 function App() {
@@ -12,7 +13,9 @@ function App() {
       {/* ChakraProvider envuelve toda la app para habilitar los estilos de Chakra UI */}
       <ChakraProvider>
         {/* RouterProvider gestiona las rutas definidas en el router */}
-        <RouterProvider router={router} />
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
       </ChakraProvider>
     </>
   );

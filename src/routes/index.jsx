@@ -6,6 +6,7 @@ import MainLayout from "../layout/MainLayout";
 import Item from "../pages/Item";
 import Category from "../pages/Category";
 import NotFound from "../pages/NotFound";
+import Memo from "../pages/Memo";
 
 // Definición de las rutas principales de la aplicación
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
         // Ruta para mostrar productos por categoría, recibe un parámetro de ID
         path: "/category/:id",
         element: <Category />,
+      },
+       {
+        // Ruta para mostrar productos por categoría, recibe un parámetro de ID
+        path: "/memo",
+        element: <Memo />,
       },
     ],
   },
