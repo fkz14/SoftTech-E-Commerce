@@ -31,7 +31,7 @@ const routes = [
         element: <Category />,
       },
        {
-        // Ruta para mostrar productos por categoría, recibe un parámetro de ID
+        
         path: "/memo",
         element: <Memo />,
       },
