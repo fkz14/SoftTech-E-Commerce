@@ -3,24 +3,33 @@ import CartWidget from "../cartWidget/CartWidget";
 import { Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { getAllCategories } from "../services/product.service";
+import { db } from "../services/config/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 // Componente de barra de navegación principal
 function NavBar() {
-  // Estado para almacenar las categorías obtenidas
+  // Estado para almacenar las categorías obtenidas desde la base de datos
   const [categories, setCategories] = useState([]);
-  // Hook para navegar entre rutas
+  // Hook para navegar entre rutas de la aplicación
   const navigate = useNavigate();
 
   // Efecto para obtener las categorías al montar el componente
   useEffect(() => {
-    getAllCategories()
-      .then((res) => {
-        setCategories(res.data);
+    // Referencia a la colección "categories" en Firestore
+    const categoriesCollection = collection(db, "categories");
+
+    // Obtiene todos los documentos de la colección "categories"
+    getDocs(categoriesCollection)
+      .then((snapshot) => {
+        // Mapea los documentos a objetos con id y datos
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        // Actualiza el estado con las categorías obtenidas
+        setCategories(data);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch(); // Aquí podrías manejar errores si lo deseas
   }, []);
 
   // Renderiza la barra de navegación con el logo, menú de categorías y el widget del carrito
@@ -43,6 +52,7 @@ function NavBar() {
         <Menu>
           <MenuButton className="menu">Menu</MenuButton>
           <MenuList>
+            {/* Lista de categorías obtenidas de la base de datos */}
             {categories.map((item) => {
               return (
                 <MenuItem

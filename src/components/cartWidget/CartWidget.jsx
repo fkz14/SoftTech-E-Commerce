@@ -7,15 +7,21 @@ import CartContext from "../../context/CartContext";
 
 // Componente que muestra el ícono del carrito y la cantidad total de productos
 function CartWidget() {
-  // Obtiene la función para contar los productos en el carrito desde el contexto
-  const { getTotalCount } = useContext(CartContext);
-  // Calcula la cantidad total de productos en el carrito
+  // Obtiene la función para contar los productos y el estado del carrito desde el contexto
+  const { getTotalCount, cart } = useContext(CartContext);
+
+  // Calcula la cantidad total de productos en el carrito usando la función del contexto
   const totalCount = getTotalCount();
+
+  // Muestra en consola el contenido actual del carrito (útil para depuración)
+  console.log(cart);
 
   // Renderiza el ícono del carrito y la cantidad de productos
   return (
     <div className="cart-widget">
+      {/* Ícono de carrito */}
       <FiShoppingCart className="cart-icon" />
+      {/* Cantidad total de productos en el carrito */}
       <span>{totalCount}</span>
     </div>
   );

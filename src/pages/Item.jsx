@@ -2,13 +2,15 @@
 import { useParams } from "react-router";
 import ItemDetailContainer from "../components/itemDetailContainer/ItemDetailContainer";
 import { useEffect, useState } from "react";
-import { getProductById } from "../components/services/product.service";
-import { Box, Center, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Box, Spinner, Text, VStack } from "@chakra-ui/react";
+import { db } from "../components/services/config/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 // Componente para mostrar el detalle de un producto individual
 const Item = () => {
   // Obtiene el parámetro de ID desde la URL
   const { id } = useParams();
+
   // Estado para almacenar el producto obtenido
   const [product, setProduct] = useState({});
   // Estado para controlar la carga
@@ -16,10 +18,17 @@ const Item = () => {
 
   // Efecto para obtener los datos del producto cuando cambia el ID
   useEffect(() => {
-    getProductById(id)
-      .then((res) => setProduct(res.data))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+    // Referencia al documento del producto en Firestore
+    const productDoc = doc(db, "products", id);
+
+    // Obtiene el documento del producto por ID
+    getDoc(productDoc)
+      .then((snapshot) => {
+        // Guarda el producto en el estado, incluyendo su ID
+        setProduct({ id: snapshot.id, ...snapshot.data() });
+      })
+      .catch((e) => console.error(e)) // Muestra errores en consola si ocurren
+      .finally(() => setLoading(false)); // Finaliza la carga
   }, [id]);
 
   // Muestra un spinner de carga mientras se obtienen los datos

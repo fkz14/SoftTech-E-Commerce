@@ -7,6 +7,7 @@ import Item from "../pages/Item";
 import Category from "../pages/Category";
 import NotFound from "../pages/NotFound";
 import Memo from "../pages/Memo";
+import AddDoc from "../pages/AddDoc";
 
 // Definición de las rutas principales de la aplicación
 const routes = [
@@ -30,8 +31,13 @@ const routes = [
         path: "/category/:id",
         element: <Category />,
       },
-       {
-        
+      {
+        // Ruta para agregar un nuevo documento/producto
+        path: "/add-doc",
+        element: <AddDoc />,
+      },
+      {
+        // Ruta para la página de ejemplo de memoización
         path: "/memo",
         element: <Memo />,
       },

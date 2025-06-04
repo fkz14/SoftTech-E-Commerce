@@ -2,7 +2,8 @@
 import { useParams } from "react-router";
 import ItemListContainer from "../components/itemListContainer/ItemListContainer";
 import { useEffect, useState } from "react";
-import { getProductsByCategory } from "../components/services/product.service";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../components/services/config/firebase";
 
 // Componente para mostrar productos filtrados por categoría
 const Category = () => {
@@ -13,13 +14,24 @@ const Category = () => {
 
   // Efecto para obtener los productos de la categoría seleccionada
   useEffect(() => {
-    getProductsByCategory(id)
-      .then((res) => {
-        setProducts(res.data.products);
+    // Crea una consulta a Firestore para filtrar productos por categoría
+    const productsQuery = query(
+      collection(db, "products"),
+      where("category", "==", id)
+    );
+
+    // Obtiene los productos que cumplen con la categoría seleccionada
+    getDocs(productsQuery)
+      .then((snapshot) => {
+        // Mapea los documentos a objetos con id y datos
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        // Actualiza el estado con los productos filtrados
+        setProducts(data);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((e) => console.error(e)); // Muestra errores en consola si ocurren
   }, [id]);
 
   // Renderiza el contenedor de la lista de productos filtrados por categoría

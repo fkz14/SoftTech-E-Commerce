@@ -78,6 +78,7 @@ const ItemDetailContainer = ({ product }) => {
         {/* Sección de información y acciones del producto */}
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={"header"}>
+            {/* Título del producto */}
             <Heading
               lineHeight={1.1}
               fontWeight={600}
@@ -85,6 +86,7 @@ const ItemDetailContainer = ({ product }) => {
             >
               {product.title}
             </Heading>
+            {/* Precio del producto */}
             <Text
               color={"white"}
               fontWeight={300}
@@ -98,6 +100,7 @@ const ItemDetailContainer = ({ product }) => {
             </Text>
           </Box>
 
+          {/* Descripción del producto */}
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={"column"}
@@ -108,7 +111,6 @@ const ItemDetailContainer = ({ product }) => {
             }
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
-              {/* Descripción del producto */}
               <Text
                 color={useColorModeValue("gray.500", "gray.400")}
                 fontSize={"2xl"}
@@ -117,46 +119,9 @@ const ItemDetailContainer = ({ product }) => {
                 {product.description}
               </Text>
             </VStack>
-            <Box>
-              <Text
-                fontSize={{ base: "16px", lg: "18px" }}
-                color={useColorModeValue("yellow.500", "yellow.300")}
-                fontWeight={"500"}
-                textTransform={"uppercase"}
-                mb={"4"}
-              >
-                Product Details
-              </Text>
-              {/* Lista de detalles adicionales del producto */}
-              <List spacing={2}>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Rating:
-                  </Text>{" "}
-                  {product.rating}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Stock:
-                  </Text>{" "}
-                  {product.stock}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    SKU:
-                  </Text>{" "}
-                  {product.sku}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Weight:
-                  </Text>{" "}
-                  {product.weight}
-                </ListItem>
-              </List>
-            </Box>
           </Stack>
 
+          {/* Componente para agregar o quitar el producto del carrito */}
           <ItemCount product={product} />
 
           {/* Información de envío */}
