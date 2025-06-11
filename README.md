@@ -1,12 +1,50 @@
-# React + Vite
+# SoftTech E-commerce 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SoftTech E-commerce es una tienda online moderna desarrollada con React, Chakra UI y Firebase. Permite a los usuarios explorar productos, filtrarlos por categorías, agregarlos al carrito y finalizar la compra de manera sencilla y profesional.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✨ **Características principales**
 
-## Expanding the ESLint configuration
+- 🛍️ **Catálogo de productos:** Visualiza todos los productos disponibles con imágenes y descripciones.
+- 📂 **Filtrado por categorías:** Navega fácilmente por categorías dinámicas.
+- 🛒 **Carrito de compras:** Añade, elimina o modifica la cantidad de productos en tu carrito.
+- 💳 **Checkout:** Finaliza tu compra con un formulario simple y recibe tu número de orden.
+- ➕ **Alta de productos:** Agrega nuevos productos a la tienda desde un formulario.
+- ⚡ **Experiencia rápida y responsiva:** Interfaz moderna y adaptable a cualquier dispositivo.
+- 🔔 **Notificaciones y feedback visual:** Mensajes claros y atractivos para cada acción.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+🌟 **Diseño profesional y experiencia de usuario**
+
+La interfaz utiliza Chakra UI para lograr un diseño limpio, minimalista y profesional, garantizando una navegación intuitiva y agradable.
+
+---
+
+🛠️ **Tecnologías utilizadas**
+
+- **React:** Librería principal para la interfaz de usuario.
+- **Chakra UI:** Componentes visuales y diseño responsivo.
+- **Firebase Firestore:** Base de datos en tiempo real para productos, categorías y órdenes.
+- **React Router:** Navegación entre páginas.
+- **Context API:** Manejo global del carrito de compras.
+- **Git / GitHub:** Control de versiones y colaboración.
+
+---
+
+📦 **Estructura principal del proyecto**
+
+```
+src/
+  components/
+  context/
+  hooks/
+  layout/
+  pages/
+  routes/
+  services/
+```
+
+---
+
