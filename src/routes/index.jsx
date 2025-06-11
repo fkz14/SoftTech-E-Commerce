@@ -8,6 +8,8 @@ import Category from "../pages/Category";
 import NotFound from "../pages/NotFound";
 import Memo from "../pages/Memo";
 import AddDoc from "../pages/AddDoc";
+import Cart from "../pages/Cart";
+import Checkout from "../pages/Checkout";
 
 // Definición de las rutas principales de la aplicación
 const routes = [
@@ -30,6 +32,16 @@ const routes = [
         // Ruta para mostrar productos por categoría, recibe un parámetro de ID
         path: "/category/:id",
         element: <Category />,
+      },
+       {
+        // Ruta para mostrar productos por categoría, recibe un parámetro de ID
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        // Ruta para mostrar productos por categoría, recibe un parámetro de ID
+        path: "/checkout",
+        element: <Checkout />,
       },
       {
         // Ruta para agregar un nuevo documento/producto

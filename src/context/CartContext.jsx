@@ -47,15 +47,27 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  const deleteProductFromCart = (itemId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+  };
+
   // Devuelve la cantidad total de productos en el carrito
   const getTotalCount = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+    return cart.reduce((total, item) => Number(total) + item.quantity, 0);
+  };
+
+  const getTotalPrice = () => {
+    const totalPrice = cart.reduce(
+      (total, item) => total + Number(item.price) * item.quantity,
+      0
+    );
+    return totalPrice;
   };
 
   // Provee el estado y las funciones del carrito a los componentes hijos
   return (
     <CartContext.Provider
-      value={{ cart, addProductToCart, removeProductFromCart, getTotalCount }}
+      value={{ cart, addProductToCart, removeProductFromCart, getTotalCount, deleteProductFromCart, getTotalPrice }}
     >
       {children}
     </CartContext.Provider>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Box,
   Container,
@@ -7,25 +7,33 @@ import {
   Image,
   Flex,
   VStack,
-  Button,
   Heading,
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  List,
-  ListItem,
   Spinner,
   Center,
 } from "@chakra-ui/react";
 import { MdLocalShipping } from "react-icons/md";
 import ItemCount from "../itemCount/ItemCount";
+import CartContext from "../../context/CartContext";
 
-// Componente para mostrar el detalle de un producto individual
 const ItemDetailContainer = ({ product }) => {
   // Estado para controlar si la imagen ya se cargó
   const [imgLoaded, setImgLoaded] = useState(false);
+  // Estado para ocultar ItemCount después de agregar al carrito
+  const [added, setAdded] = useState(false);
 
-  // Renderiza el detalle del producto con imagen, información y botón de agregar al carrito
+  const { addProductToCart, cart } = useContext(CartContext);
+
+  // Verifica si el producto ya está en el carrito
+  const isInCart = cart.some((item) => item.id === product.id);
+
+  const handleAdd = () => {
+    addProductToCart(product);
+    setAdded(true);
+  };
+
   return (
     <Container maxW={"7xl"}>
       <SimpleGrid
@@ -33,7 +41,7 @@ const ItemDetailContainer = ({ product }) => {
         spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 24 }}
       >
-        {/* Sección de la imagen del producto */}
+        {/* Imagen del producto */}
         <Flex
           align="center"
           justify="center"
@@ -57,7 +65,6 @@ const ItemDetailContainer = ({ product }) => {
               <Spinner size="xl" color="teal.400" thickness="6px" />
             </Center>
           )}
-          {/* Imagen principal del producto */}
           <Image
             rounded={"md"}
             alt={"product image"}
@@ -75,10 +82,9 @@ const ItemDetailContainer = ({ product }) => {
             display={imgLoaded ? "block" : "none"}
           />
         </Flex>
-        {/* Sección de información y acciones del producto */}
+        {/* Info y acciones */}
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={"header"}>
-            {/* Título del producto */}
             <Heading
               lineHeight={1.1}
               fontWeight={600}
@@ -86,7 +92,6 @@ const ItemDetailContainer = ({ product }) => {
             >
               {product.title}
             </Heading>
-            {/* Precio del producto */}
             <Text
               color={"white"}
               fontWeight={300}
@@ -99,8 +104,6 @@ const ItemDetailContainer = ({ product }) => {
               ${product.price}
             </Text>
           </Box>
-
-          {/* Descripción del producto */}
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={"column"}
@@ -120,14 +123,17 @@ const ItemDetailContainer = ({ product }) => {
               </Text>
             </VStack>
           </Stack>
-
-          {/* Componente para agregar o quitar el producto del carrito */}
-          <ItemCount product={product} />
-
-          {/* Información de envío */}
+          {/* Solo muestra ItemCount si NO está en el carrito */}
+          {!isInCart && !added ? (
+            <ItemCount onAdd={handleAdd} product={product} />
+          ) : (
+            <Text color="green.500" fontWeight="bold" fontSize="xl" textAlign="center">
+              Producto agregado al carrito.
+            </Text>
+          )}
           <Stack direction="row" alignItems="center" justifyContent={"center"}>
             <MdLocalShipping />
-            <Text>2-3 business days delivery</Text>
+            <Text> Envio en 2-3 dias</Text>
           </Stack>
         </Stack>
       </SimpleGrid>

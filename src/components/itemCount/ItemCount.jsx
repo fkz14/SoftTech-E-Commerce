@@ -1,25 +1,20 @@
+// Importa los componentes Button y Flex desde Chakra UI para crear el botón y el contenedor flexible
 import { Button, Flex } from "@chakra-ui/react";
-import { useContext } from "react";
-import CartContext from "../../context/CartContext";
 
-const ItemCount = ({ product }) => {
-  const { addProductToCart, removeProductFromCart, cart } = useContext(CartContext);
-
-  // Busca el producto en el carrito para saber su cantidad
-  const cartItem = cart.find((item) => item.id === product.id);
-  const quantity = cartItem ? cartItem.quantity : 0;
-
+// Componente funcional ItemCount
+// Recibe dos props:
+//   - product: el producto a agregar al carrito (no se utiliza en este componente)
+//   - onAdd: función que se ejecuta al hacer clic en el botón para agregar el producto
+const ItemCount = ({ product, onAdd }) => {
+  // Renderiza un contenedor flexible centrado con un botón
   return (
+    // Flex crea un contenedor con espacio entre elementos y centra el contenido
     <Flex gap={"5"} justifyContent={"center"}>
-      <Button onClick={() => addProductToCart(product)}>Agregar item</Button>
-      <Button
-        onClick={() => removeProductFromCart(product)}
-        disabled={quantity === 0}
-      >
-        Quitar item
-      </Button>
+      {/* Botón que al hacer clic llama a la función onAdd con el argumento 1 */}
+      <Button onClick={() => onAdd(1)}>Agregar al carrito</Button>
     </Flex>
   );
 };
 
+// Exporta el componente ItemCount para su uso en otros archivos
 export default ItemCount;

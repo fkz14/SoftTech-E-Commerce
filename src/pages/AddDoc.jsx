@@ -1,96 +1,185 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, Box, Heading, VStack, useToast, Container, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../components/services/config/firebase";
+import { db } from "../services/config/firebase";
 
-// Componente para agregar un nuevo producto a la base de datos
 const AddDoc = () => {
-  // Estado para manejar los valores del formulario
   const [formState, setFormState] = useState({
     title: "",
     description: "",
     price: 0.0,
     thumbnail: "",
     category: "",
+    images: "", // Usamos string para ingresar varias URLs separadas por coma
   });
 
-  // Maneja el envío del formulario
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Previene el comportamiento por defecto del formulario
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
-    // Referencia a la colección "products" en Firestore
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Convierte el string de imágenes en array, eliminando espacios vacíos
+    const imagesArray = formState.images
+      .split(",")
+      .map((img) => img.trim())
+      .filter((img) => img.length > 0);
+
     const productsCollection = collection(db, "products");
 
-    // Agrega un nuevo documento a la colección con los datos del formulario
-    addDoc(productsCollection, formState)
+    addDoc(productsCollection, {
+      ...formState,
+      images: imagesArray,
+    })
       .then(({ id }) => {
-        // Muestra el ID del nuevo producto en consola
-        console.log(id);
+        toast({
+          title: "Producto creado",
+          description: `El producto fue agregado correctamente (ID: ${id})`,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        setFormState({
+          title: "",
+          description: "",
+          price: 0.0,
+          thumbnail: "",
+          category: "",
+          images: "",
+        });
       })
-      .catch((e) => console.error(e)); // Muestra errores en consola si ocurren
+      .catch(() => {
+        toast({
+          title: "Error",
+          description: "No se pudo agregar el producto.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .finally(() => setLoading(false));
   };
 
-  // Renderiza el formulario para crear un nuevo producto
   return (
-    <form onSubmit={handleSubmit}>
-      {/* Input para el título del producto */}
-      <Input
-        type="text"
-        placeholder="Titulo"
-        onChange={(e) => {
-          setFormState({
-            ...formState,
-            title: e.target.value,
-          });
-        }}
-      />
-      {/* Input para la descripción del producto */}
-      <Input
-        type="text"
-        placeholder="Descripcion"
-        onChange={(e) => {
-          setFormState({
-            ...formState,
-            description: e.target.value,
-          });
-        }}
-      />
-      {/* Input para el precio del producto */}
-      <Input
-        type="number"
-        placeholder="Precio"
-        onChange={(e) => {
-          setFormState({
-            ...formState,
-            price: e.target.value,
-          });
-        }}
-      />
-      {/* Input para la URL de la imagen del producto */}
-      <Input
-        type="text"
-        placeholder="Thumbnail"
-        onChange={(e) => {
-          setFormState({
-            ...formState,
-            thumbnail: e.target.value,
-          });
-        }}
-      />
-      {/* Input para la categoría del producto */}
-      <Input
-        type="text"
-        placeholder="Categoria"
-        onChange={(e) => {
-          setFormState({
-            ...formState,
-            category: e.target.value,
-          });
-        }}
-      />
-      {/* Botón para enviar el formulario */}
-      <Button type="submit"> Crear </Button>
-    </form>
+    <Container maxW="lg" py={12}>
+      <Box
+        bg="white"
+        p={8}
+        borderRadius="xl"
+        boxShadow="2xl"
+        maxW="md"
+        mx="auto"
+      >
+        <Heading color="teal.600" mb={6} textAlign="center">
+          Agregar producto
+        </Heading>
+        <form onSubmit={handleSubmit}>
+          <VStack spacing={5}>
+            <Input
+              type="text"
+              placeholder="Título"
+              value={formState.title}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  title: e.target.value,
+                });
+              }}
+              isRequired
+              size="lg"
+              bg="gray.50"
+              borderRadius="md"
+            />
+            <Input
+              type="text"
+              placeholder="Descripción"
+              value={formState.description}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  description: e.target.value,
+                });
+              }}
+              isRequired
+              size="lg"
+              bg="gray.50"
+              borderRadius="md"
+            />
+            <Input
+              type="number"
+              placeholder="Precio"
+              value={formState.price}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  price: Number(e.target.value),
+                });
+              }}
+              isRequired
+              size="lg"
+              bg="gray.50"
+              borderRadius="md"
+            />
+            <Textarea
+              placeholder="Imagen de detalle (URLs separadas por coma)"
+              value={formState.images}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  images: e.target.value,
+                });
+              }}
+              isRequired
+              size="lg"
+              bg="gray.50"
+              borderRadius="md"
+            />
+            <Input
+              type="text"
+              placeholder="Thumbnail"
+              value={formState.thumbnail}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  thumbnail: e.target.value,
+                });
+              }}
+              isRequired
+              size="lg"
+              bg="gray.50"
+              borderRadius="md"
+            />
+            <Input
+              type="text"
+              placeholder="Categoría"
+              value={formState.category}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  category: e.target.value,
+                });
+              }}
+              isRequired
+              size="lg"
+              bg="gray.50"
+              borderRadius="md"
+            />
+            <Button
+              type="submit"
+              colorScheme="teal"
+              size="lg"
+              w="100%"
+              borderRadius="full"
+              isLoading={loading}
+              loadingText="Agregando..."
+            >
+              Agregar
+            </Button>
+          </VStack>
+        </form>
+      </Box>
+    </Container>
   );
 };
 

@@ -3,7 +3,7 @@ import CartWidget from "../cartWidget/CartWidget";
 import { Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { db } from "../services/config/firebase";
+import { db } from "../../services/config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 // Componente de barra de navegación principal

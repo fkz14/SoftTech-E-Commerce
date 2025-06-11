@@ -1,35 +1,38 @@
-// Importa los hooks necesarios y el componente de lista de productos
-import { useEffect, useState } from "react";
+import { useTitle } from "../hooks/useTitle";
+import { useGetFirestoreDocs } from "../hooks/useGetFirestoreDocs";
 import ItemListContainer from "../components/itemListContainer/ItemListContainer";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../components/services/config/firebase";
+import { Box, Spinner, Text, VStack } from "@chakra-ui/react";
 
-// Componente principal para la página de inicio
 const Home = () => {
-  // Estado para almacenar los productos obtenidos desde la base de datos
-  const [products, setProducts] = useState([]);
+  useTitle("Inicio | SoftTech");
 
-  // Efecto para obtener los productos al montar el componente
-  useEffect(() => {
-    // Referencia a la colección "products" en Firestore
-    const productsCollection = collection(db, "products");
+  const { items: products, loading, error } = useGetFirestoreDocs("products");
 
-    // Obtiene todos los documentos de la colección "products"
-    getDocs(productsCollection)
-      .then((snapshot) => {
-        // Mapea los documentos a objetos con id y datos
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        // Actualiza el estado con los productos obtenidos
-        setProducts(data);
-      })
-      .catch() // Aquí podrías manejar errores si lo deseas
-      .finally(); // Aquí podrías realizar acciones finales si lo deseas
-  }, []);
+  if (loading)
+    return (
+      <Box
+        position="fixed"
+        top={0}
+        left={0}
+        width="100vw"
+        height="100vh"
+        zIndex={9999}
+        bgGradient="linear(to-br, gray.900, gray.700)"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <VStack spacing={4}>
+          <Spinner size="xl" thickness="6px" speed="0.7s" color="teal.400" />
+          <Text color="white" fontSize="2xl" fontWeight="bold">
+            Cargando productos...
+          </Text>
+        </VStack>
+      </Box>
+    );
 
-  // Renderiza el contenedor de la lista de productos, pasando los productos obtenidos
+  if (error) return <div>Error al cargar productos.</div>;
+
   return <ItemListContainer products={products} />;
 };
 
