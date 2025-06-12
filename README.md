@@ -2,6 +2,8 @@
 
 SoftTech E-commerce es una tienda online moderna desarrollada con React, Chakra UI y Firebase. Permite a los usuarios explorar productos, filtrarlos por categorías, agregarlos al carrito y finalizar la compra de manera sencilla y profesional.
 
+Puedes ver el proyecto en acción en **[SoftTech E-Commerce](https://softtech-e-commerce.netlify.app/)**.
+
 ---
 
 ✨ **Características principales**
