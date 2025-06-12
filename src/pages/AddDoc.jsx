@@ -7,10 +7,10 @@ const AddDoc = () => {
   const [formState, setFormState] = useState({
     title: "",
     description: "",
-    price: 0.0,
+    price: "", // Ahora es string vacío
     thumbnail: "",
     category: "",
-    images: "", // Usamos string para ingresar varias URLs separadas por coma
+    images: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -30,6 +30,7 @@ const AddDoc = () => {
 
     addDoc(productsCollection, {
       ...formState,
+      price: Number(formState.price), // Convierte a número solo al guardar
       images: imagesArray,
     })
       .then(({ id }) => {
@@ -43,7 +44,7 @@ const AddDoc = () => {
         setFormState({
           title: "",
           description: "",
-          price: 0.0,
+          price: "",
           thumbnail: "",
           category: "",
           images: "",
@@ -111,15 +112,21 @@ const AddDoc = () => {
               placeholder="Precio"
               value={formState.price}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
-                  price: Number(e.target.value),
-                });
+                // Permite borrar el 0 inicial y solo acepta números positivos o vacío
+                const value = e.target.value;
+                if (value === "" || /^[0-9]*\.?[0-9]*$/.test(value)) {
+                  setFormState({
+                    ...formState,
+                    price: value,
+                  });
+                }
               }}
               isRequired
               size="lg"
               bg="gray.50"
               borderRadius="md"
+              min="0"
+              step="any"
             />
             <Textarea
               placeholder="Imagen de detalle (URLs separadas por coma)"
